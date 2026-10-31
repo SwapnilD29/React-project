@@ -48,12 +48,17 @@ function HabbitItem({habit, deleteHabit, toggleHabit}:HabbitItemProp){
         }
     )
 
+    const streak= countStreak(habit.completions)
+
     return (
         <div className="flex flex-col gap-3 rounded-xl bg-zinc-800 p-4">
             <div className="flex items-center justify-between">
                 <div className="flex gap-3 items-center">
                     <span className="font-medium">{habit.name}</span>
-                    <span className="text-sm text-amber-400">🔥 {countStreak(habit.completions)}</span>
+                    {
+                        streak !== 0 &&
+                    <span className="text-sm text-amber-400">🔥 {streak}</span>
+}
                 </div>
                 <Button onClick={()=>deleteHabit(habit.id)} variant="Destructive">Delete</Button>
             </div>
