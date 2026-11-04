@@ -16,9 +16,10 @@ type HabbitProviderProps ={
 
 export const HabbitContext = createContext<null | Context>(null)
 
+
 export function HabbitProvider({children}:HabbitProviderProps){
 
-    const [habbits,setHabbits] = useState<Habbit[]>([])
+  const [habbits,setHabbits] = useState<Habbit[]>([])
 
   function addHabbit(name : string){
       setHabbits((habbits) => [...habbits, {id: crypto.randomUUID(), name:name, completions:[]}])
@@ -41,7 +42,6 @@ export function HabbitProvider({children}:HabbitProviderProps){
         })
     )
   }
-
 
     return <HabbitContext value={{habbits, deleteHabit, toggleHabit, addHabbit}}>{children}</HabbitContext>
 }
