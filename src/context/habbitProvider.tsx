@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import type { Habbit } from "../components/habbitList";
-import { isSameDay } from "date-fns";
+import { addWeeks, eachDayOfInterval, endOfWeek, isSameDay, startOfWeek } from "date-fns";
 
 
 export type Context ={
@@ -8,6 +8,9 @@ export type Context ={
     deleteHabit: (id : string)=> void
     toggleHabit: (id: string, date: Date) => void
     addHabbit: (name:string) => void
+    visibleDates: Date[]
+    onNext: ()=>void
+    onPrev: ()=>void
 }
 
 type HabbitProviderProps ={
@@ -43,7 +46,25 @@ export function HabbitProvider({children}:HabbitProviderProps){
     )
   }
 
-    return <HabbitContext value={{habbits, deleteHabit, toggleHabit, addHabbit}}>{children}</HabbitContext>
+  const [weekOffset, setWeekOffset] = useState(0)
+  
+    const week= addWeeks(new Date(), weekOffset)
+  
+    const visibleDates= eachDayOfInterval(
+          {
+              start: startOfWeek(week, {weekStartsOn:1}),
+              end: endOfWeek(week, {weekStartsOn:1})
+          }
+      )
+    
+    function onNext(){
+      setWeekOffset(o => o + 1)
+    }
+
+    function onPrev(){
+      setWeekOffset(o => o - 1)
+    }
+    return <HabbitContext value={{habbits,visibleDates, deleteHabit, toggleHabit, addHabbit,onNext,onPrev}}>{children}</HabbitContext>
 }
 
 export function useHabbit(){

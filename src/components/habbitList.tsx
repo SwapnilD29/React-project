@@ -36,14 +36,7 @@ export default function HabbitList(){
 
 function HabbitItem({habit}:HabbitItemProp){
     
-    const {deleteHabit,toggleHabit} = useHabbit()
-
-    const visibleDates= eachDayOfInterval(
-        {
-            start: startOfWeek(new Date()),
-            end: endOfWeek(new Date())
-        }
-    )
+    const {deleteHabit,toggleHabit, visibleDates} = useHabbit()
 
     const streak= countStreak(habit.completions)
 
