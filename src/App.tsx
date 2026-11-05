@@ -2,8 +2,6 @@ import Header from "./components/header"
 import HabbitForm from "./components/habbitForm"
 import { HabbitProvider } from "./context/habbitProvider"
 import HabbitList from "./components/habbitList"
-import { useState } from "react"
-import { addWeeks, eachDayOfInterval, endOfWeek, startOfWeek } from "date-fns"
 
 function App() {
 

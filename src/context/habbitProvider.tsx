@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
 import type { Habbit } from "../components/habbitList";
 import { addWeeks, eachDayOfInterval, endOfWeek, isSameDay, startOfWeek } from "date-fns";
+import { useLocalStorage } from "../hooks/useLocalStorage";
 
 
 export type Context ={
@@ -22,18 +23,18 @@ export const HabbitContext = createContext<null | Context>(null)
 
 export function HabbitProvider({children}:HabbitProviderProps){
 
-  const [habbits,setHabbits] = useState<Habbit[]>([])
+  const [habbits,setHabbits] = useLocalStorage<Habbit[]>("Habbits",[])
 
   function addHabbit(name : string){
-      setHabbits((habbits) => [...habbits, {id: crypto.randomUUID(), name:name, completions:[]}])
+      setHabbits((habbits:Habbit[]) => [...habbits, {id: crypto.randomUUID(), name:name, completions:[]}])
   }
 
   function deleteHabit(id: string){
-    setHabbits(habbits => habbits.filter(habbit => habbit.id !== id))
+    setHabbits((habbits:Habbit[]) => habbits.filter(habbit => habbit.id !== id))
   }
 
   function toggleHabit(id: string, date: Date){
-    setHabbits(habbits=>
+    setHabbits((habbits:Habbit[])=>
         habbits.map(habit=>{
           if(habit.id !== id) return habit
           
