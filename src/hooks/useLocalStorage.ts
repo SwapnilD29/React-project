@@ -12,11 +12,10 @@ export function useLocalStorage<T>(key:string, initialValue:T){
             return initialValue
         }
     })
+    let x=1
 
     useEffect(()=>{
         localStorage.setItem(key, JSON.stringify(storedValue))
-
-        return ()=>localStorage.removeItem(key)
     },[storedValue])
 
     return [storedValue,setStoredValue] as const
